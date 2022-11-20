@@ -6,6 +6,7 @@
 #define WRITE std::ios::out
 #define APPEND std::ios::app
 #define MAX_BUFF_SIZE std::numeric_limits<std::streamsize>::max()
+typedef unsigned int UI;
 
 template <typename T>
 void validarEntrada(std::string mensajeError,T &var){
