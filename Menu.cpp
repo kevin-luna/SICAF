@@ -11,7 +11,6 @@
 #include "Pedido.cpp"
 #include "Cafeteria.cpp"
 #include "CatalogoProductos.cpp"
-typedef unsigned int UI;
 class Menu{
     private:
     bool salir=false;
