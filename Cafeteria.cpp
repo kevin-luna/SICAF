@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <limits>
+#include <iostream>
 
 #define READ std::ios::in
 #define WRITE std::ios::out
@@ -27,17 +28,3 @@ void validarEntrada(std::string mensajeError,T &var,T limiteIzquierdo,T limiteDe
         std::cout<<mensajeError;
     }
 }
-// #include "MenuRegistroVentas.h"
-// #include "SubmenuPedidos.h"
-
-//ARCHIVOS
-// bool buscarProductoEnPedido(int numeroMesa,std::string id){
-//    for(Pedido &i:pedidosPorMesa[numeroMesa]){
-//         if(i.producto.id==id){
-//             std::cout<<"Ingrese la nueva cantidad: (i.cantidad)":<<"\n"
-//             cin>>i.cantidad;
-//             return true;
-//         }
-//     }
-//     return false;
-// }
