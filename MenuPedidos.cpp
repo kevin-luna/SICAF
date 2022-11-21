@@ -10,11 +10,10 @@ class MenuPedidos:public Menu{
     UI numeroMesa;
     std::string tmp;
     static float totalVentasDia;
-    static std::string nombreArchivoRVentasMesa;
-    static std::string nombreArchivoRVentasProd;
     std::string nombreTicket;
-    static std::fstream RegistroVentasMesa;
-    static std::fstream RegistroVentasProducto;
+    std::fstream RegistroVentasTotales;
+    std::fstream RegistroVentasMesa;
+    std::fstream RegistroVentasProducto;
     std::fstream Ticket;
     MenuPedidos():Menu(){
         cantidadOpciones=5;
@@ -36,7 +35,7 @@ class MenuPedidos:public Menu{
         }else{
             std::cout<<"Numero de mesa: Mesa "<<numeroMesa<<"\n";
             std::cout<<"Contenido del pedido:\n";
-            std::cout<<"|\tID\t|\tProducto\t|\tPrecio\t|\tCantidad\t|\n";
+            std::cout<<"|    ID    |    Producto    |    Precio    |    Cantidad    |\n";
             for(auto i:pedidosPorMesa[numeroMesa]){
                 std::cout<<i.id<<" "<<CatalogoProductos::catalogoProductos[i.id].nombre<<" $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<" "<<i.cantidad<<"\n";
             }
@@ -124,18 +123,29 @@ class MenuPedidos:public Menu{
                 if(tmp=="S" || tmp=="s"||tmp=="Si"||tmp=="si"){
                     nombreTicket="Tickets/"+std::to_string(currentDate->tm_mday)+"-"+std::to_string(currentDate->tm_mon)+"-"+std::to_string(currentDate->tm_year+1900)+"-"+std::to_string(currentDate->tm_hour)+":"+std::to_string(currentDate->tm_min)+".txt";
                     Ticket.open(nombreTicket,WRITE);
+                    RegistroVentasTotales.open("RegistroVentas/VentasTotales.txt",APPEND);
+                    RegistroVentasMesa.open("RegistroVentas/Mesa/"+std::to_string(numeroMesa)+".txt",APPEND);
+                    // RegistroVentasProducto.open("RegistroVentas/Producto/"+i)
                     Ticket<<"---DEV'S COFFEE---\n";
                     Ticket<<"FECHA: "<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"\n";
                     Ticket<<"HORA: "<<currentDate->tm_hour<<":"<<currentDate->tm_min<<"\n";
                     Ticket<<"Numero de mesa: Mesa "<<numeroMesa<<"\n";
                     Ticket<<"Contenido del pedido:\n";
-                    Ticket<<"|\tID\t|\tProducto\t|\tPrecio\t|\tCantidad\t|\n";
+                    Ticket<<"|    ID    |    Producto    |    Precio    |    Cantidad    |\n";
                     for(auto i:pedidosPorMesa[numeroMesa]){
                         Ticket<<i.id<<" "<<CatalogoProductos::catalogoProductos[i.id].nombre<<" $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<" "<<i.cantidad<<"\n";
+                        RegistroVentasTotales<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"    "<<i.id<<"    "<<CatalogoProductos::catalogoProductos[i.id].nombre<<"    $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<"    "<<i.cantidad<<"\n";
+                        RegistroVentasMesa<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"    "<<i.id<<"    "<<CatalogoProductos::catalogoProductos[i.id].nombre<<"    $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<"    "<<i.cantidad<<"\n";
+                        RegistroVentasProducto.open("RegistroVentas/Producto/"+i.id+".txt",APPEND);
+                        RegistroVentasProducto<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"    "<<i.id<<"    "<<CatalogoProductos::catalogoProductos[i.id].nombre<<"    $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<"    "<<i.cantidad<<"\n";
+                        RegistroVentasProducto.close();
                     }
                     Ticket<<"TOTAL: "<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
                     Ticket<<"¡GRACIAS POR SU COMPRA!";
                     Ticket.close();
+                    RegistroVentasTotales.close();
+                    pedidosPorMesa[numeroMesa].clear();
+                    std::cout<<"Ticket generado exitosamente\n";
                     cerrar();
                 }
             }
