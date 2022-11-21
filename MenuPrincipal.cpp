@@ -4,6 +4,7 @@
 #include "MenuProductos.cpp"
 #include "Producto.cpp"
 #include "CatalogoProductos.cpp"
+#include "MenuRegistroVentas.cpp"
 class MenuPrincipal:public Menu{
     public:
     // std::map<std::string,Producto> catalogoProductos;
@@ -31,7 +32,8 @@ class MenuPrincipal:public Menu{
             MenuProductos menuProductos;
             menuProductos.iniciar();
         }else if(op==3){
-
+            MenuRegistroVentas menuRegistros;
+            menuRegistros.iniciar();
         }else if(op==4){
 
         }else cerrar();
