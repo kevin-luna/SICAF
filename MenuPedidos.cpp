@@ -135,6 +135,7 @@ class MenuPedidos:public Menu{
                     }
                     Ticket<<"TOTAL: "<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
                     Ticket<<"¡GRACIAS POR SU COMPRA!";
+                    Ticket.close();
                     cerrar();
                 }
             }
