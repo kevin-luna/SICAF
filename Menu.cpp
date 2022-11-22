@@ -23,7 +23,7 @@ class Menu{
     UI opcionLeida;
     
     Menu(){
-        textoFechaActual=std::to_string(fechaActual->tm_mday)+"-"+std::to_string(fechaActual->tm_mon)+"-"+std::to_string(fechaActual->tm_year+1900);
+        textoFechaActual=std::to_string(fechaActual->tm_mday)+"-"+std::to_string(fechaActual->tm_mon+1)+"-"+std::to_string(fechaActual->tm_year+1900);
     }
 
     void leerOpcion(){
