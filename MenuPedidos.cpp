@@ -121,23 +121,22 @@ class MenuPedidos:public Menu{
                 std::cin.ignore(MAX_BUFF_SIZE,'\n');
                 std::getline(std::cin,tmp);
                 if(tmp=="S" || tmp=="s"||tmp=="Si"||tmp=="si"){
-                    nombreTicket="Tickets/"+std::to_string(currentDate->tm_mday)+"-"+std::to_string(currentDate->tm_mon)+"-"+std::to_string(currentDate->tm_year+1900)+"-"+std::to_string(currentDate->tm_hour)+":"+std::to_string(currentDate->tm_min)+".txt";
+                    nombreTicket="Tickets/"+std::to_string(fechaActual->tm_mday)+"-"+std::to_string(fechaActual->tm_mon)+"-"+std::to_string(fechaActual->tm_year+1900)+"-"+std::to_string(fechaActual->tm_hour)+"-"+std::to_string(fechaActual->tm_min)+".txt";
                     Ticket.open(nombreTicket,WRITE);
                     RegistroVentasTotales.open("RegistroVentas/VentasTotales.txt",APPEND);
                     RegistroVentasMesa.open("RegistroVentas/Mesa/"+std::to_string(numeroMesa)+".txt",APPEND);
-                    // RegistroVentasProducto.open("RegistroVentas/Producto/"+i)
                     Ticket<<"---DEV'S COFFEE---\n";
-                    Ticket<<"FECHA: "<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"\n";
-                    Ticket<<"HORA: "<<currentDate->tm_hour<<":"<<currentDate->tm_min<<"\n";
+                    Ticket<<"FECHA: "<<textoFechaActual<<"\n";
+                    Ticket<<"HORA: "<<fechaActual->tm_hour<<":"<<fechaActual->tm_min<<"\n";
                     Ticket<<"Numero de mesa: Mesa "<<numeroMesa<<"\n";
                     Ticket<<"Contenido del pedido:\n";
                     Ticket<<"|    ID    |    Producto    |    Precio    |    Cantidad    |\n";
                     for(auto i:pedidosPorMesa[numeroMesa]){
                         Ticket<<i.id<<" "<<CatalogoProductos::catalogoProductos[i.id].nombre<<" $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<" "<<i.cantidad<<"\n";
-                        RegistroVentasTotales<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"    "<<i.id<<"    "<<CatalogoProductos::catalogoProductos[i.id].nombre<<"    $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<"    "<<i.cantidad<<"\n";
-                        RegistroVentasMesa<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"    "<<i.id<<"    "<<CatalogoProductos::catalogoProductos[i.id].nombre<<"    $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<"    "<<i.cantidad<<"\n";
+                        RegistroVentasTotales<<textoFechaActual<<";"<<i.id<<";"<<i.cantidad<<";";
+                        RegistroVentasMesa<<textoFechaActual<<";"<<i.id<<";"<<i.cantidad<<";";
                         RegistroVentasProducto.open("RegistroVentas/Producto/"+i.id+".txt",APPEND);
-                        RegistroVentasProducto<<currentDate->tm_mday<<"/"<<currentDate->tm_mon<<"/"<<currentDate->tm_year+1900<<"    "<<i.id<<"    "<<CatalogoProductos::catalogoProductos[i.id].nombre<<"    $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<"    "<<i.cantidad<<"\n";
+                        RegistroVentasProducto<<textoFechaActual<<";"<<i.id<<";"<<i.cantidad<<";";
                         RegistroVentasProducto.close();
                     }
                     Ticket<<"TOTAL: "<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
