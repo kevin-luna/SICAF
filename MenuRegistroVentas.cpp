@@ -68,25 +68,42 @@ class MenuRegistroVentas:public Menu{
                     return;
                 }else{
                     std::vector<float> ventasDelMes(32,0.0);
-                    UI dia,mes,elementos;
+                    UI dia,mes,elementos=0;
+                    float precio=0;
                     archivoRegistro.open("RegistroVentas/Producto/"+tmp+".txt");
-                    while(std::getline(archivoRegistro,tmp,'/') && tmp.size()>0){//Lee el dia
+                    while(std::getline(archivoRegistro,tmp,'-') && tmp.size()>0){//Lee el dia
                         dia=std::stoi(tmp);
-                        std::getline(archivoRegistro,tmp,'/');//Lee el mes
+                        std::getline(archivoRegistro,tmp,'-');//Lee el mes
                         mes=std::stoi(tmp);
-                        std::getline(archivoRegistro,tmp,' ');//Lee el año
-                        std::cin.ignore(4,' ');
-                        std::getline(archivoRegistro,tmp,' ');//Lee el ID
+                        std::getline(archivoRegistro,tmp,';');//Lee el año
+                        std::getline(archivoRegistro,tmp,';');//Lee el ID
                         if(mes==opcionLeida){
-                            ventasDelMes[dia]+=CatalogoProductos::catalogoProductos[tmp].precio;
+                            precio=CatalogoProductos::catalogoProductos[tmp].precio;
+                            std::getline(archivoRegistro,tmp,';');
+                            ventasDelMes[dia]+=precio*std::stoi(tmp);
                             ++elementos;
                         }
-                        std::getline(archivoRegistro,tmp,'\n');//Lee el resto de la linea
                     }
                     archivoRegistro.close();
                     if(elementos==0){
                         std::cout<<"No hubo ventas del producto en el mes seleccionado.\n";
                         return;
+                    }
+                    SegmentTree arbolDeSegmentos(ventasDelMes);
+                    std::cout<<"Leyendo consultas:\n";
+                    std::cout<<"Cuando desee terminar, ingrese 0 para ambos limites.\n";
+                    int izquierdo=0,derecho=0;
+                    while(1){
+                        std::cout<<"Ingrese el limite izquierdo del intervalo:";
+                        validarEntrada("Por favor ingrese un valor entre 1 y 31.",izquierdo,0,31);
+                        std::cout<<"Ingrese el limite derecho del intervalo:";
+                        validarEntrada("Por favor ingrese un valor entre 1 y 31.",derecho,0,31);
+                        if(izquierdo==0 && derecho==0)break;
+                        if(izquierdo>derecho || izquierdo==0 || derecho==0)std::cout<<"Consulta invalida.\n";
+                        else{
+                            std::cout<<"La venta del producto entre "<<izquierdo<<" y "<<derecho<<" del mes, fue de:";
+                            std::cout<<"$"<<std::fixed<<std::setprecision(2)<<arbolDeSegmentos.consultaSuma(izquierdo,derecho)<<"\n";
+                        }
                     }
                 }
             }else{
