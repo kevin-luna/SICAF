@@ -16,12 +16,15 @@ class Menu{
     bool salir=false;
     public:
     static std::time_t t;//obtiene la fecha actual
-    static std::tm* currentDate;
+    static std::tm* fechaActual;
+    static std::string textoFechaActual;
     static CatalogoProductos miCatalogo;
     UI cantidadOpciones;
     UI opcionLeida;
     
-    Menu(){}
+    Menu(){
+        textoFechaActual=std::to_string(fechaActual->tm_mday)+"/"+std::to_string(fechaActual->tm_mon)+"/"+std::to_string(fechaActual->tm_year+1900);
+    }
 
     void leerOpcion(){
         validarEntrada("Introduzca una opcion valida\n",opcionLeida,static_cast<UI>(1),cantidadOpciones);
@@ -42,4 +45,5 @@ class Menu{
 
 CatalogoProductos Menu::miCatalogo;
 std::time_t Menu::t = std::time(0);//obtiene la fecha actual
-std::tm* Menu::currentDate = std::localtime(&t);
+std::tm* Menu::fechaActual = std::localtime(&t);
+std::string Menu::textoFechaActual;
