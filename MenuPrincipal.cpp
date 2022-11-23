@@ -10,6 +10,8 @@ class MenuPrincipal:public Menu{
     MenuPrincipal():Menu(){
         cantidadOpciones=4;
         miCatalogo.cargarCatalogo();
+        //cada que se inicia el menú principal, se carga la fecha actual.
+        textoFechaActual=std::to_string(fechaActual->tm_mday)+"-"+std::to_string(fechaActual->tm_mon+1)+"-"+std::to_string(fechaActual->tm_year+1900);
     }
     ~MenuPrincipal(){};
     void mostrarMenu(){
