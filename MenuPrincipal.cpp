@@ -10,10 +10,12 @@ class MenuPrincipal:public Menu{
     MenuPrincipal():Menu(){
         cantidadOpciones=4;
         miCatalogo.cargarCatalogo();
-        //cada que se inicia el menú principal, se carga la fecha actual.
+        //cada que se inicia el menú principal, se carga la fecha actual
+        //y estará disponible para todos los menús.
         textoFechaActual=std::to_string(fechaActual->tm_mday)+"-"+std::to_string(fechaActual->tm_mon+1)+"-"+std::to_string(fechaActual->tm_year+1900);
     }
     ~MenuPrincipal(){};
+    //se imprimen las opciones del menú
     void mostrarMenu(){
         std::cout<<"Por favor seleccione una opción:\n";
         std::cout<<"[1] Realizar un pedido\n";
@@ -21,6 +23,7 @@ class MenuPrincipal:public Menu{
         std::cout<<"[3] Ver Registro de ventas\n";
         std::cout<<"[4] Salir\n";
     }
+    //se inician los menús dependiendo de la opción elegida
     void seleccionarOpcion(int op) override{
         if(op==1){
             MenuPedidos menuPedidos;

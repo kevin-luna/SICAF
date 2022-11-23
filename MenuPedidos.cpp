@@ -40,7 +40,7 @@ class MenuPedidos:public Menu{
                 std::cout<<i.id<<" "<<CatalogoProductos::catalogoProductos[i.id].nombre<<" $"<<std::fixed<<std::setprecision(2)<<CatalogoProductos::catalogoProductos[i.id].precio<<" "<<i.cantidad<<"\n";
             }
         }
-        std::cout<<"TOTAL: "<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
+        std::cout<<"TOTAL: $"<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
     }
 
     void seleccionarOpcion(int op) override{
@@ -76,7 +76,7 @@ class MenuPedidos:public Menu{
                     if(itr->id==tmp){
                         totalAcumulado-=itr->cantidad*CatalogoProductos::catalogoProductos[itr->id].precio;
                         std::cout<<"Ingrese la nueva cantidad: ";
-                        std::cin.ignore(MAX_BUFF_SIZE,'\n');
+                        // std::cin.ignore(MAX_BUFF_SIZE,'\n');
                         validarEntrada("Por ingrese un valor positivo.",itr->cantidad);
                         totalAcumulado+=itr->cantidad*CatalogoProductos::catalogoProductos[itr->id].precio;
                         break;
@@ -139,7 +139,7 @@ class MenuPedidos:public Menu{
                         RegistroVentasProducto<<textoFechaActual<<";"<<i.id<<";"<<i.cantidad<<";";
                         RegistroVentasProducto.close();
                     }
-                    Ticket<<"TOTAL: "<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
+                    Ticket<<"TOTAL: $"<<std::fixed<<std::setprecision(2)<<totalAcumulado<<"\n";
                     Ticket<<"¡GRACIAS POR SU COMPRA!";
                     Ticket.close();
                     RegistroVentasTotales.close();
