@@ -39,15 +39,4 @@ class SegmentTree{
         return consultaSuma(izq(nodo),limiteIzquierdo,m,sumaIzquierda,std::min(m,sumaDerecha))
         +consultaSuma(der(nodo),m+1,limiteDerecho,std::max(m+1,sumaIzquierda),sumaDerecha);
     }
-
-    void imprimir(){
-        for(auto i:arbol)std::cout<<i<<" ";
-    }
 };
-
-// int main(){
-//     std::vector<float> a = {1.0,2.0,3.0,4.0,5.0,6.0,7.0};
-//     SegmentTree tree(a);
-//     // tree.imprimir();
-//     std::cout<<tree.consultaSuma(0,6);
-// };
